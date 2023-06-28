@@ -2,6 +2,12 @@ const express=require("express");
 const skills=require("./models/skills");
 const app=express();
 
+// Require the route file
+const skillsRoute = require('./route/skills');
+
+// Use the route middleware
+app.use('/skills', skillsRoute);
+
 const mongoose = require('mongoose');
 
  // MongoClient.connect("mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority")
@@ -14,23 +20,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
 
-  app.get('/',(req,res)=>{
-    const oneskills = new skills({
-        title: 'java',
-        // age: 25,
-        rate: '78'
-      });
-      
-      // Save the document
-      oneskills.save()
-        .then((doc) => {
-          console.log('Saved document:', doc);
-        })
-        .catch((err) => {
-          console.error('Error saving document:', err);
-        })
-    
-  })
+ 
  
 
 app.listen(3000, ()=>{

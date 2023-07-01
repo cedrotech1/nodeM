@@ -13,7 +13,8 @@ const student=require("../models/student");
   router.post('/add', (req, res) => {
     const fname=req.body.fname;
     const lname=req.body.lname;
-    const data={fname,lname}
+    const roomid=req.body.roomid;
+    const data={fname,lname,roomid}
     
     const onestudent= new student(data);
 
@@ -30,7 +31,7 @@ const student=require("../models/student");
 
   router.get('/view', async (req, res) => {
     try {
-         const data= await skills.find().limit(7);
+         const data= await student.find().limit(7).populate('roomid');
          const total=data.length;
         //  console.log(total)
 

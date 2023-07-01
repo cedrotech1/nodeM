@@ -11,15 +11,16 @@ app.use(express.json());
 // const mongoose = require('mongoose');
 // Require the route file
 const skillsRoute = require('./route/skills');
-
+const studentRoute = require('./route/student');
 // Use the route middleware
 app.use('/skills', skillsRoute);
+app.use('/student', studentRoute);
 
 
 
-const uri = 'mongodb://127.0.0.1:27017/protofolio';
- 
-// const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+// const uri = 'mongodb://127.0.0.1:27017/protofolio';
+// cedrick:<password>@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority
+const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
@@ -28,8 +29,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
 
- 
- 
 
 app.listen(3000, ()=>{
     console.log("app server is runing on port 3000")

@@ -6,13 +6,42 @@ const student=require("../models/student");
 
 const getALL=async (req, res) => {
     try {
-         const data= await student.find().populate('roomid').select('fname lname');
+         const data= await student.find().populate('roomid');
          
             res.send({data:data}) 
     } catch (error) {
         res.send(error)
     }  
   }
+
+  const Operation=async (req, res) => {
+    try {
+         let  data= await student.find().populate("roomid");
+       
+        data= data.filter(data=> data.roomid.roomnumber>100)
+         
+            res.send({data:data}) 
+
+
+
+    } catch (error) {
+        res.send(error)
+    }  
+  }
+
+
+
+
+  const getList=async (req, res) => {
+    try {
+         const data= await student.find();
+         
+            res.send({data:data}) 
+    } catch (error) {
+        res.send(error)
+    }  
+  }
+
 
 
 
@@ -34,24 +63,25 @@ const getALL=async (req, res) => {
     }
   }
   //   ________________ADD____________________________
-  const Add=(req, res) => {
-    const fname=req.body.fname;
-    const lname=req.body.lname;
-    const roomid=req.body.roomid;
-    const data={fname,lname,roomid}
-    
-    const onestudent= new student(data);
-
-    onestudent.save()
-        .then(() => {
-        res.json(onestudent)
-        })
-        .catch((err) => {
-          res.send({error: err.message});
-        })
-    
-  }
-
+  const Add = async (req, res) => {
+    const fname = req.body.fname;
+    const lname = req.body.lname;
+    const gender = req.body.gender;
+    const age = req.body.age;
+    const roomid = req.body.roomid;
+  
+    const data = { fname, lname, roomid, age, gender };
+    const onestudent = new student(data);
+  
+    try {
+      const response = await onestudent.save();
+      res.send(response);
+    } catch (err) {
+      res.send({ error: err });
+    }
+  };
+  
+  
 //   __________________UPDATE________________________________________
 
 const Update=(req, res) => {
@@ -61,8 +91,12 @@ const Update=(req, res) => {
  
      const fname=req.body.fname;
      const lname=req.body.lname;
+     const gender=req.body.gender;
+     const age=req.body.age;
+     
      const roomid=req.body.roomid;
-     const data={fname,lname,roomid}
+     
+     const data={fname,lname,roomid,age,gender}
      
      // const oneskills = new skills(data);
      student.findByIdAndUpdate(id,data)
@@ -81,18 +115,21 @@ const Update=(req, res) => {
 
 //   ________________DELETE____________________________
 
-const Delete =(req,res)=>{
-    try {
-        const id=req.params.id
-        skills.findByIdAndDelete(id)
-        .then(()=>{
-            res.status(200).json("well deleted")
-        })
-        
-    } catch (error) {
-        res.status(500).json({error:error})
+const Delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedStudent = await student.findByIdAndDelete(id);
+
+    if (!deletedStudent) {
+      return res.status(404).json({ error: 'Student not found' });
     }
- }
+
+    res.send({ student: deletedStudent });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 
   module.exports={
@@ -100,5 +137,7 @@ const Delete =(req,res)=>{
     One,
     Add,
     Update,
-    Delete
+    Delete,
+    getList,
+    Operation
   }

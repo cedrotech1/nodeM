@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const student=require("../models/student");
+// const student=require("../models/student");
 
-const {getALL,One,Add,Update,Delete}=require("../controller/studentCont");
+const {getALL,One,Add,Update,Delete,getList,Operation}=require("../controller/studentCont");
 
 
   router.post('/add', Add)
+  router.get('/operation', Operation)
+  router.get('/list', getList)
   router.get('/all', getALL)
   router.get('/one/:id', One);
   router.put('/update/:id', Update)

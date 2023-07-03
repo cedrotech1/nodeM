@@ -1,14 +1,13 @@
-const student=require("../models/student");
+// const student=require("../models/room");
 
-
+const room=require("../models/room");
 
 //   ________________ALL STUDENTS____________________________
 
 const getALL=async (req, res) => {
     try {
-         const data= await student.find().populate('roomid').select('fname lname');
-         
-            res.send({data:data}) 
+         const data= await room.find();
+         res.send({data:data}) 
     } catch (error) {
         res.send(error)
     }  
@@ -20,7 +19,7 @@ const getALL=async (req, res) => {
   const One=async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await student.findById(id).select('fname lname').populate('roomid');
+      const data = await room.findById(id).select('roomnumber');
 
       if (!data) {
         // Data does not exist for the provided id
@@ -35,16 +34,15 @@ const getALL=async (req, res) => {
   }
   //   ________________ADD____________________________
   const Add=(req, res) => {
-    const fname=req.body.fname;
-    const lname=req.body.lname;
-    const roomid=req.body.roomid;
-    const data={fname,lname,roomid}
-    
-    const onestudent= new student(data);
+    const roomnumber=req.body.roomnumber;
 
-    onestudent.save()
+    const data={roomnumber}
+    
+    const oneroom= new room(data);
+
+    oneroom.save()
         .then(() => {
-        res.json(onestudent)
+        res.json(oneroom)
         })
         .catch((err) => {
           res.send({error: err.message});
@@ -59,13 +57,12 @@ const Update=(req, res) => {
  
      const id=req.params.id;
  
-     const fname=req.body.fname;
-     const lname=req.body.lname;
-     const roomid=req.body.roomid;
-     const data={fname,lname,roomid}
+     const roomnumber=req.body.roomnumber;
+     const data={roomnumber}
+     
      
      // const oneskills = new skills(data);
-     student.findByIdAndUpdate(id,data)
+     room.findByIdAndUpdate(id,data)
              .then(() => {
                  // Process the retrieved data
                  res.send(data)
@@ -84,7 +81,7 @@ const Update=(req, res) => {
 const Delete =(req,res)=>{
     try {
         const id=req.params.id
-        skills.findByIdAndDelete(id)
+        room.findByIdAndDelete(id)
         .then(()=>{
             res.status(200).json("well deleted")
         })

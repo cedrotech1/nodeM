@@ -42,7 +42,7 @@ app.use('/room', roomRoute);
 // cedrick:<password>@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority
 
   app.get('/', (req, res) => {
-    res.send('Hello, world!');
+    res.send('Hello, Cedrick test....!');
   });
   
 

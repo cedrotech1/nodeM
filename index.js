@@ -20,15 +20,20 @@ app.use('/room', roomRoute);
 
 
 
-const uri = 'mongodb://127.0.0.1:27017/protofolio';
+// const uri = 'mongodb://127.0.0.1:27017/protofolio';
 // cedrick:<password>@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority
-// const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   }).catch((err)=>{
     console.log(err);
   })
+
+  app.get('/hello', (req, res) => {
+    res.send('Hello, world!');
+  });
+  
 
 
 

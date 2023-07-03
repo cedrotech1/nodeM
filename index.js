@@ -6,13 +6,21 @@ const mongoose = require('mongoose');
 // const { Schema } = mongoose;
 app.use(express.json());
 
-const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+const connectionString = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+// const mongoose = require('mongoose');
+// const connectionString = 'your-mongodb-connection-string'; // Replace with your actual connection string
+
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => {
     console.log('Connected to MongoDB');
-  }).catch((err)=>{
-    console.log(err);
+    // Start your server or perform other operations here
   })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 
 // const app=express();

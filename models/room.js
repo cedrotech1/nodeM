@@ -1,6 +1,8 @@
 const mongoose=require("mongoose");
-const roomSchema= new mongoose.Schema({
+
+const Room= new mongoose.Schema({
     roomnumber:String,
+    // roomname:String,
    
 })
-module.exports=mongoose.model('room',roomSchema);
+module.exports=mongoose.model('room',Room);

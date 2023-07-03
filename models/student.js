@@ -1,5 +1,5 @@
 const mongoose=require("mongoose");
-const roomSchema= new mongoose.Schema({
+const studentSchema= new mongoose.Schema({
     fname:String,
     lname:String,
     roomid:{
@@ -7,4 +7,4 @@ const roomSchema= new mongoose.Schema({
         ref:'room',
     },
 })
-module.exports=mongoose.model('students',roomSchema);
+module.exports=mongoose.model('students',studentSchema);

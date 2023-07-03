@@ -12,15 +12,17 @@ app.use(express.json());
 // Require the route file
 const skillsRoute = require('./route/skills');
 const studentRoute = require('./route/student');
+const roomRoute = require('./route/room');
 // Use the route middleware
 app.use('/skills', skillsRoute);
 app.use('/student', studentRoute);
+app.use('/room', roomRoute);
 
 
 
-// const uri = 'mongodb://127.0.0.1:27017/protofolio';
+const uri = 'mongodb://127.0.0.1:27017/protofolio';
 // cedrick:<password>@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority
-const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+// const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');

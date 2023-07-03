@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 // const { Schema } = mongoose;
 app.use(express.json());
 
-const connectionString = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+const connectionString ="mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority";
+// const connectionString = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 // const mongoose = require('mongoose');
 // const connectionString = 'your-mongodb-connection-string'; // Replace with your actual connection string
 

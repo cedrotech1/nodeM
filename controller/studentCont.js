@@ -1,4 +1,5 @@
 const student=require("../models/student");
+const b=require("bcrypt");
 
 
 
@@ -6,7 +7,16 @@ const student=require("../models/student");
 
 const getALL=async (req, res) => {
     try {
-         const data= await student.find().populate('roomid');
+         const data= await student.find({
+          'roomid': { $exists: true },
+        }).populate({
+          path: 'roomid',
+          select: 'roomnumber',
+          populate: {
+            path: 'hostelid',
+            select: 'name location',
+          }, // Specify the fields you want to include
+        });
          
             res.send({data:data}) 
     } catch (error) {
@@ -34,7 +44,7 @@ const getALL=async (req, res) => {
 
   const getList=async (req, res) => {
     try {
-         const data= await student.find();
+         const data= await student.find({}, { fname: 1,lname: 1,age: 1,gender:1,password:1 });
          
             res.send({data:data}) 
     } catch (error) {
@@ -69,13 +79,29 @@ const getALL=async (req, res) => {
     const gender = req.body.gender;
     const age = req.body.age;
     const roomid = req.body.roomid;
+    let password=req.body.password;
   
-    const data = { fname, lname, roomid, age, gender };
-    const onestudent = new student(data);
-  
+    
     try {
-      const response = await onestudent.save();
-      res.send(response);
+
+      b.hash(password,10,async (err,hash)=>{
+
+        if(err)
+        {
+          console.log(err)
+        }else{
+          password=hash;
+          const data = { fname, lname, roomid, age, gender , password};
+          const onestudent = new student(data);
+                
+          const response = await onestudent.save();
+          res.send(response);
+        }
+    
+ })
+
+
+      
     } catch (err) {
       res.send({ error: err });
     }

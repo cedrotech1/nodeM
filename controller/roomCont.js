@@ -58,7 +58,8 @@ const Update=(req, res) => {
      const id=req.params.id;
  
      const roomnumber=req.body.roomnumber;
-     const data={roomnumber}
+     const hostelid=req.body.hostelid;
+     const data={roomnumber,hostelid}
      
      
      // const oneskills = new skills(data);

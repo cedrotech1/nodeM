@@ -4,6 +4,7 @@ const studentSchema= new mongoose.Schema({
     lname:String,
     gender: String,
     age:String,
+    password:String,
     roomid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'room',

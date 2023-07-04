@@ -9,7 +9,7 @@ app.use(express.json());
 const uri = 'mongodb://127.0.0.1:27017/protofolio';
 
 // const uri ="mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority";
-// const connectionString = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
+// const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 // const mongoose = require('mongoose');
 // const connectionString = 'your-mongodb-connection-string'; // Replace with your actual connection string
 
@@ -23,7 +23,7 @@ mongoose.connect(uri, {
     // Start your server or perform other operations here
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('Error connecting to MongoDB:', error.message);
   });
 
 

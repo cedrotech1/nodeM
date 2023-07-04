@@ -5,6 +5,7 @@ const studentSchema= new mongoose.Schema({
     gender: String,
     age:String,
     password:String,
+    username:String,
     roomid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'room',

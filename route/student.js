@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const student=require("../models/student");
 
-const {getALL,One,Add,Update,Delete,getList,Operation}=require("../controller/studentCont");
+const {getALL,One,Add,Update,Delete,getList,Operation,Login}=require("../controller/studentCont");
 
 
   router.post('/add', Add)
@@ -12,6 +12,7 @@ const {getALL,One,Add,Update,Delete,getList,Operation}=require("../controller/st
   router.get('/one/:id', One);
   router.put('/update/:id', Update)
   router.delete("/delete/:id",Delete)
+  router.post('/login', Login)
 
 
 // Export the router

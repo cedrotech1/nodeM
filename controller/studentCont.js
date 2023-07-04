@@ -39,13 +39,42 @@ const getALL=async (req, res) => {
     }  
   }
 
+  const Login = async (req, res) => {
+    try {
+      const usernamex = req.body.usernamex;
+      const passwordx = req.body.passwordx;
+  
+      const studentData = await student.findOne({ username: usernamex }).select('password');
+
+          if (!studentData) {
+            res.send({message:'invalid username!'});
+            return;
+          }
+
+          const storedPassword = studentData.password;
+    
+      // // Compare the provided password with the stored hashed password
+              const passwordMatch = await b.compare(passwordx, storedPassword);
+              if (passwordMatch) 
+              {
+                res.send({message:'Login successful!'});
+              } else {
+                res.send({message:'Invalid  password'});
+              }
+
+    } catch (error) {
+      res.send(error);
+    }
+  };
+  
+
 
 
 
   const getList=async (req, res) => {
     try {
-         const data= await student.find({}, { fname: 1,lname: 1,age: 1,gender:1,password:1 });
-         
+         const data= await student.find({}, { fname: 1,lname: 1,age: 1,gender:1,password:1,username: 1 });
+                 
             res.send({data:data}) 
     } catch (error) {
         res.send(error)
@@ -79,6 +108,7 @@ const getALL=async (req, res) => {
     const gender = req.body.gender;
     const age = req.body.age;
     const roomid = req.body.roomid;
+    const username = req.body.username;
     let password=req.body.password;
   
     
@@ -91,7 +121,7 @@ const getALL=async (req, res) => {
           console.log(err)
         }else{
           password=hash;
-          const data = { fname, lname, roomid, age, gender , password};
+          const data = { fname, lname, roomid, age, gender ,username, password};
           const onestudent = new student(data);
                 
           const response = await onestudent.save();
@@ -119,10 +149,10 @@ const Update=(req, res) => {
      const lname=req.body.lname;
      const gender=req.body.gender;
      const age=req.body.age;
-     
+     const username=req.body.username;
      const roomid=req.body.roomid;
      
-     const data={fname,lname,roomid,age,gender}
+     const data={fname,lname,roomid,age,gender,username}
      
      // const oneskills = new skills(data);
      student.findByIdAndUpdate(id,data)
@@ -165,5 +195,6 @@ const Delete = async (req, res) => {
     Update,
     Delete,
     getList,
-    Operation
+    Operation,
+    Login
   }

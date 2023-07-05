@@ -57,6 +57,8 @@ const getALL=async (req, res) => {
               const passwordMatch = await b.compare(passwordx, storedPassword);
               if (passwordMatch) 
               {
+                req.session.student=usernamex;
+                console.log(req.session.student);
                 res.send({message:'Login successful!'});
               } else {
                 res.send({message:'Invalid  password'});
@@ -185,8 +187,6 @@ const Delete = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
   module.exports={
     getALL,

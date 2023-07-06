@@ -6,8 +6,11 @@ const room=require("../models/room");
 
 const getALL=async (req, res) => {
     try {
-         const data= await room.find();
-         res.send({data:data}) 
+         const data= await room.find().populate({
+          path: 'hostelid',
+         select: 'name location',
+        });
+         res.send({rooms:data}) 
     } catch (error) {
         res.send(error)
     }  

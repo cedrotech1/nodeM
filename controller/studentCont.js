@@ -42,18 +42,14 @@ const getALL=async (req, res) => {
 
   const verifyauto=(req,res,next)=>{
     const secret="am cedrick"
-
     const token=req.headers['autorization'];
-
     // const token=jwt.sign({name:"cedrick"},secret);
-    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsYWluIiwiaWF0IjoxNjg4NjQ3ODk0fQ.pNj_vtHOpD-OjJ6PoMutMgEcdVzA_LxxEICTbbp-dj8";
-
-
-    const verify=jwt.verify(token,secret,(err,ok)=>{
+    const verify=jwt.verify(token,secret,(err,decode)=>{
       if(err)
       {
         res.send(err.message)
       }else{
+        console.log(decode)
          next();
       }
     })       
@@ -64,7 +60,7 @@ const getALL=async (req, res) => {
       const usernamex = req.body.usernamex;
       const passwordx = req.body.passwordx;
   
-      const studentData = await student.findOne({ username: usernamex }).select('password');
+      const studentData = await student.findOne({ username: usernamex }).select('password username fname lname');
 
           if (!studentData) {
             res.send({message:'invalid username!'});
@@ -80,7 +76,7 @@ const getALL=async (req, res) => {
                 const secret="am cedrick";
                 // req.session.student=usernamex;
                 // console.log(req.session.student);
-                 const token=jwt.sign({username:usernamex},secret);
+                 const token=jwt.sign({data:studentData},secret);
                 res.send({message:'Login successful!',token});
               } else {
                 res.send({message:'Invalid  password'});

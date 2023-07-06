@@ -1,5 +1,6 @@
 const express=require("express");
 const session = require("express-session");
+const jwt = require("jsonwebtoken");
 
 // const skills=require("./models/skills");
 const app=express();
@@ -10,9 +11,9 @@ const mongoose = require('mongoose');
 app.use(express.json());
 app.use(cookieParser());
 
-const uri = 'mongodb://127.0.0.1:27017/protofolio';
+// const uri = 'mongodb://127.0.0.1:27017/protofolio';
 
-// const uri ="mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority";
+const uri ="mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority";
 // const uri = 'mongodb+srv://cedrick:cedrick@cluster0.wtzj3ht.mongodb.net/?retryWrites=true&w=majority';
 // const mongoose = require('mongoose');
 // const connectionString = 'your-mongodb-connection-string'; // Replace with your actual connection string
@@ -64,7 +65,23 @@ const x={
 }
 
   app.get('/', (req, res) => {
-    res.json({message:x.wellcame});
+
+    const secret="am cedrick"
+
+    // const token=jwt.sign({name:"cedrick"},secret);
+    const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY2VkcmljayIsImlhdCI6MTY4ODY0NTM4MH0.Ts_46b0jmU0fnAwunnoLLeeTVFj8Xt5iRIvfOIuX1Ck";
+
+    const decode=jwt.decode(token);
+    const verify=jwt.verify(token,secret,(err,ok)=>{
+      if(err)
+      {
+        console.log(err.message)
+      }else{
+         res.json({token,decode:decode,verify:verify});
+      }
+    })       
+
+    res.json({token,decode:decode,verify:verify});
   });
   
 

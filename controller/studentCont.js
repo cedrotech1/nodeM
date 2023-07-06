@@ -1,5 +1,6 @@
 const student=require("../models/student");
 const b=require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 
@@ -39,6 +40,25 @@ const getALL=async (req, res) => {
     }  
   }
 
+  const verifyauto=(req,res,next)=>{
+    const secret="am cedrick"
+
+    const token=req.headers['autorization'];
+
+    // const token=jwt.sign({name:"cedrick"},secret);
+    // const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsYWluIiwiaWF0IjoxNjg4NjQ3ODk0fQ.pNj_vtHOpD-OjJ6PoMutMgEcdVzA_LxxEICTbbp-dj8";
+
+
+    const verify=jwt.verify(token,secret,(err,ok)=>{
+      if(err)
+      {
+        res.send(err.message)
+      }else{
+         next();
+      }
+    })       
+  }
+
   const Login = async (req, res) => {
     try {
       const usernamex = req.body.usernamex;
@@ -57,9 +77,11 @@ const getALL=async (req, res) => {
               const passwordMatch = await b.compare(passwordx, storedPassword);
               if (passwordMatch) 
               {
-                req.session.student=usernamex;
-                console.log(req.session.student);
-                res.send({message:'Login successful!'});
+                const secret="am cedrick";
+                // req.session.student=usernamex;
+                // console.log(req.session.student);
+                 const token=jwt.sign({username:usernamex},secret);
+                res.send({message:'Login successful!',token});
               } else {
                 res.send({message:'Invalid  password'});
               }
@@ -196,5 +218,6 @@ const Delete = async (req, res) => {
     Delete,
     getList,
     Operation,
-    Login
+    Login,
+    verifyauto
   }

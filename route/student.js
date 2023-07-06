@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 // const student=require("../models/student");
 
-const {getALL,One,Add,Update,Delete,getList,Operation,Login}=require("../controller/studentCont");
+const {getALL,One,Add,Update,Delete,getList,Operation,Login,verifyauto}=require("../controller/studentCont");
 
 
   router.post('/add', Add)
   router.get('/operation', Operation)
   router.get('/list', getList)
-  router.get('/all', getALL)
+  router.get('/all',verifyauto, getALL)
   router.get('/one/:id', One);
   router.put('/update/:id', Update)
   router.delete("/delete/:id",Delete)
